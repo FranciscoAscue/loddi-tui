@@ -24,6 +24,8 @@
     <aside class="docs-nav" aria-label="Documentation sections">
       <div class="eyebrow">GUIDE</div>
       <a href="#install">Installation</a>
+      <a href="#portable">Portable downloads</a>
+      <a href="#updates">Updates</a>
       <a href="#quick-start">Quick start</a>
       <a href="#editor">Editor</a>
       <a href="#navigation">Navigation</a>
@@ -34,39 +36,56 @@
     </aside>
     <article class="docs-content">
       <div class="eyebrow">DOCUMENTATION / 0.1</div>
-      <h1>Make room for the manuscript.</h1>
-      <p class="lede">Loddi works with ordinary Markdown files. Use it for one document, or initialize a folder to manage a complete book.</p>
+      <h1>Install. Write. Export.</h1>
+      <p class="lede">Start with a Markdown file or a folder. Loddi keeps your source files editable outside the TUI.</p>
 
       <section id="install">
         <h2>Installation</h2>
-        <p>Loddi requires Node.js 22.20 or newer and targets Windows, macOS and Linux. The package is not yet published on npm.</p>
-        <p>Linux / macOS — inspect the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/scripts/install.sh">installer</a> before piping it to Bash:</p>
+        <p>Install the current package from GitHub. You need Node.js 22.20 or newer and npm. On Windows, you also need Git. Do not use <code>npm install -g loddi-tui</code> until the package is published to the npm registry.</p>
+        <p>Linux or macOS: review the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/scripts/install.sh">installer script</a>, then run:</p>
         <pre><code>curl -fsSL https://raw.githubusercontent.com/FranciscoAscue/loddi-tui/master/scripts/install.sh | bash
 loddi --version</code></pre>
-        <p>Windows PowerShell:</p>
+        <p>Windows PowerShell: clone, build and install the package archive:</p>
         <pre><code>git clone https://github.com/FranciscoAscue/loddi-tui.git
 cd loddi-tui
 npm ci
 npm pack --ignore-scripts
 npm install --global .\loddi-tui-0.1.0.tgz
 loddi --version</code></pre>
-        <p>The shell installer requires curl and tar; the Windows route also requires Git. Both build from <code>master</code> and then install a packaged copy. The script never uses <code>sudo</code> or installs Node.js. Pandoc and Typst are optional until export. See the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/INSTALL.md">platform installation guide</a> for updates, removal and troubleshooting.</p>
+        <p>Use the archive filename printed by <code>npm pack</code> if the version is no longer 0.1.0. The shell script requires curl and tar; it builds from <code>master</code>, then installs the package without sudo. Neither route installs Node.js. If <code>loddi</code> is not found after installation, check that npm's global binary directory is on <code>PATH</code>. See the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/INSTALL.md">full installation guide</a> for troubleshooting and removal.</p>
+      </section>
+      <section id="portable">
+        <h2>Portable downloads</h2>
+        <p>The project can build platform-specific <code>.tar.gz</code> archives with Node.js included. A portable build runs without a separate Node or npm installation: use <code>./loddi</code> on Linux/macOS or <code>.\loddi.cmd</code> on Windows.</p>
+        <p>Download <a href="https://github.com/FranciscoAscue/loddi-tui/releases/tag/v0.1.0">Loddi v0.1.0</a> for Linux x64/ARM64, macOS Intel/Apple Silicon or Windows x64. Download its adjacent <code>.sha256</code> file and check it before extraction. Read the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/PORTABLE.md">portable guide</a> for commands and limitations.</p>
+      </section>
+      <section id="updates">
+        <h2>Updates</h2>
+        <p>When a newer portable release is available, the TUI asks before downloading it. You can also open <code>/update</code> or use the terminal:</p>
+        <pre><code>loddi update --check   # check only
+loddi update           # ask before installing
+loddi update --yes     # confirm in a script</code></pre>
+        <p>The updater verifies the archive and installs it beside the current version. Restart using the launcher path it prints. It does not replace an npm-global installation or touch manuscript files. Version 0.1.0 is currently the latest release, so it will not offer itself as an update. See the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/PORTABLE.md#updating-later">update guide</a>.</p>
       </section>
       <section id="navigation">
         <h2>Navigation and commands</h2>
-        <p>The launcher searches the manuscript without filling the screen with a file tree. Use <kbd>↑</kbd> and <kbd>↓</kbd> to move through results, then <kbd>Enter</kbd> to open one. Type <kbd>/</kbd> for commands and <kbd>?</kbd> for contextual shortcuts. The command list scrolls when a book has many chapters.</p>
-        <p>Commands cover creating and renaming manuscript files, reviewing the book, managing references and fonts, checking/installing publishing tools, and exporting. Use the on-screen command list for the exact options available in your current context.</p>
+        <p>Type to search documents. Use <kbd>↑</kbd>/<kbd>↓</kbd> or Page Up/Page Down to move through long lists; press <kbd>Enter</kbd> to open. Type <kbd>/</kbd> for commands and <kbd>?</kbd> for shortcuts.</p>
+        <p>Create chapters with <kbd>Ctrl+N</kbd>, sections with <kbd>Ctrl+T</kbd> and a cover with <kbd>Ctrl+O</kbd>. Rename the selected document with <kbd>Ctrl+E</kbd>. Use <kbd>Alt+↑</kbd>/<kbd>Alt+↓</kbd> to reorder it; Loddi keeps the moved item selected and shows its new position. Only numbered files in <code>chapters/</code> are renamed. Other Markdown filenames stay as they are.</p>
       </section>
       <section id="quick-start">
         <h2>Quick start</h2>
+        <p>Create a book folder, then open it:</p>
         <pre><code>loddi init ./my-book --title "My book"
 loddi ./my-book</code></pre>
-        <p>Type to search your manuscript. Type <kbd>/</kbd> to reveal commands, or <kbd>?</kbd> for shortcuts. Open an existing Markdown file directly with <code>loddi ./notes.md</code>; it does not need a project.</p>
-        <p>To index existing Markdown files in a folder without moving them, use <code>loddi init ./folder --adopt</code>. This creates the book manifest and contents file; it stops if a <code>SUMMARY.md</code> already exists.</p>
+        <p>Already have Markdown files? Open one directly, or index a folder without moving its files:</p>
+        <pre><code>loddi ./notes.md
+loddi init ./existing-folder --adopt
+loddi ./existing-folder</code></pre>
+        <p><code>init --adopt</code> creates <code>book.yaml</code> and <code>SUMMARY.md</code>. It stops if <code>SUMMARY.md</code> already exists, so Loddi does not overwrite it.</p>
       </section>
       <section id="editor">
         <h2>Editor</h2>
-        <p>The editor shows highlighted Markdown source. Fenced code gets language-aware colors. Press <kbd>Ctrl+P</kbd> for a compact insertion menu: headings, bold, lists, code, Mermaid, LaTeX math and images. Choose with arrows and Enter or the menu letter. The same menu lets you focus or remove a Markdown block.</p>
+        <p>The editor shows Markdown source with syntax highlighting, including language-aware fenced code. Press <kbd>Ctrl+P</kbd> to insert headings, lists, code, Mermaid, LaTeX math or images. Select with arrows and Enter, or use the option letter. You can also focus or remove a Markdown block from this menu.</p>
         <div class="key-grid">
           <div><kbd>Ctrl+S</kbd><span>Save</span></div>
           <div><kbd>Ctrl+P</kbd><span>Insert Markdown</span></div>
@@ -84,7 +103,7 @@ loddi ./my-book</code></pre>
       </section>
       <section id="citations">
         <h2>Citations</h2>
-        <p>Export a Zotero library as BibTeX and import the <code>.bib</code> file through <code>/references</code>. Loddi stores references in the project bibliography. In the editor, <kbd>Ctrl+I</kbd> searches entries; <kbd>Tab</kbd> collects multiple citations, <kbd>Ctrl+T</kbd> switches narrative and parenthetical form, and Enter inserts them.</p>
+        <p>Export references from Zotero as BibTeX. In Loddi, open <code>/references</code> and import the <code>.bib</code> file. You can browse and edit entries there. In the editor, <kbd>Ctrl+I</kbd> searches references; <kbd>Tab</kbd> collects multiple citations, <kbd>Ctrl+T</kbd> switches citation form, and Enter inserts them.</p>
         <p>Direct Zotero account synchronization is not implemented.</p>
       </section>
       <section id="publishing">
@@ -94,16 +113,16 @@ loddi tools install pandoc
 loddi tools install typst
 loddi export epub ./my-book
 loddi export pdf ./my-book</code></pre>
-        <p>The same operations are available inside the launcher as <code>/install pandoc</code>, <code>/install typst</code>, <code>/export epub</code> and <code>/export pdf</code>. EPUB uses Pandoc; PDF also uses Typst by default. Managed tools are installed in user data, not system directories. Use <code>/fonts</code> to choose a font for PDF output. Export opens its own terminal screen, so status and errors remain visible.</p>
+        <p>Run <code>/install pandoc</code> and <code>/install typst</code> inside the TUI if you prefer. EPUB uses Pandoc. PDF uses Pandoc and Typst by default. Loddi installs managed tools in user data, not system directories. Use <code>/fonts</code> to choose a PDF font and <code>/review</code> to check the manuscript before export.</p>
       </section>
       <section id="files">
         <h2>Project files</h2>
-        <p>A project is a normal folder. The <code>book.yaml</code> manifest tracks the manuscript; <code>SUMMARY.md</code> is regenerated when its structure changes. Markdown chapters, front matter, cover, bibliography and images remain readable in other tools. Loddi separates cover, contents and manuscript units in publication output.</p>
+        <p>A project is a normal folder. <code>book.yaml</code> tracks document order, and Loddi regenerates <code>SUMMARY.md</code> when that order changes. Cover, contents, front matter and chapters are separate Markdown files. Images live under <code>assets/</code>; references live under <code>bibliography/</code>. You can also open a single <code>.md</code> file without a project.</p>
       </section>
       <section id="limits">
         <h2>Current limits</h2>
-        <p>Mermaid blocks are highlighted in the editor but exported as code unless an external preprocessor is configured. The terminal does not render images or full LaTeX; final layout is handled during export. Cross-platform CI is configured, but its remote results and a published npm package are still pending.</p>
-        <p>For development details and current status, read the <a href="https://github.com/FranciscoAscue/loddi-tui#readme">README</a> and <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/plan.md">plan</a>.</p>
+        <p>The TUI highlights Mermaid blocks but does not render their diagrams. The terminal does not display images or full LaTeX. Use the exported file to check final layout. Zotero account sync is not available; import BibTeX instead. The npm registry package is not published; use the portable GitHub Release or install from source.</p>
+        <p>For development details and current status, read the <a href="https://github.com/FranciscoAscue/loddi-tui#readme">README</a>.</p>
       </section>
     </article>
   </main>
