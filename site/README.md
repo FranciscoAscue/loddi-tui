@@ -1,6 +1,6 @@
 # Loddi static website
 
-`index.html` is the landing page; `documentation.html` is the guide. A copy lives in the root of `gh-pages` for review. GitHub Pages remains disabled until explicitly configured. Press `/` for site navigation or `?` for shortcuts; these are website controls, not a browser-based TUI.
+`index.html` is the landing page; `documentation.html` is the guide. This `site/` directory is the source of the website. Copy its contents to the root of `gh-pages` when publishing that branch; the branch may lag behind local edits. GitHub Pages remains disabled until explicitly configured. Press `/` for site navigation or `?` for shortcuts; these are website controls, not a browser-based TUI.
 
 Preview from the repository root with `npx serve site` and open the local URL printed by the server. A web server is required for the `.cast` files; opening `index.html` directly as `file://` may block them.
 

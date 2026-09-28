@@ -177,12 +177,12 @@ export async function regenerateSummary(project: BookProject): Promise<void> {
 }
 
 /**
- * Renumber chapters and front-matter sections so their NN- filename prefix
- * always matches their position in the content array.  Files are renamed on
+ * Renumber numbered files in chapters/ so their NN- filename prefix
+ * matches their chapter order. Other Markdown documents keep their names. Files are renamed on
  * disk using a two-pass (temp → final) approach to avoid conflicts when two
  * adjacent items swap numbers.  The manifest and SUMMARY are updated as well.
  */
-export async function renumberContent(project: BookProject): Promise<void> {
+export async function renumberContent(project: BookProject): Promise<Map<string, string>> {
   async function renumberGroup(items: string[], groupPrefix: string): Promise<Map<string, string>> {
     const renames = new Map<string, string>(); // oldRelPath → newRelPath
     const tempPairs: Array<{from: string; to: string; tempAbs: string}> = [];
@@ -224,45 +224,42 @@ export async function renumberContent(project: BookProject): Promise<void> {
     return renames;
   }
 
-  const frontmatter = project.book.content.filter(p => p.startsWith('frontmatter/'));
-  const chapters    = project.book.content.filter(p => p.startsWith('chapters/'));
-
-  // Process the two groups independently (different directories → no conflicts)
-  const [fmRenames, chRenames] = await Promise.all([
-    renumberGroup(frontmatter, 'frontmatter'),
-    renumberGroup(chapters,    'chapters'),
-  ]);
+  const chapters = project.book.content.filter(p => /^chapters\/\d+-[^/]+\.md$/i.test(p));
+  const chRenames = await renumberGroup(chapters, 'chapters');
 
   // Update the in-memory content array with new paths
   project.book.content = project.book.content.map(p =>
-    fmRenames.get(p) ?? chRenames.get(p) ?? p,
+    chRenames.get(p) ?? p,
   );
 
   await saveBook(project);
   await regenerateSummary(project);
+  return chRenames;
 }
 
 /**
  * Move a content item up or down within project.book.content, then renumber
- * all files in the same group so the NN- prefix always matches the new order.
+ * numbered chapter files only. Returns the moved document's current path so
+ * the launcher can keep it selected after a chapter filename changes.
  */
 export async function moveContentItem(
   project: BookProject,
   relativePath: string,
   direction: 'up' | 'down',
-): Promise<void> {
+): Promise<string> {
   const index = project.book.content.indexOf(relativePath);
   if (index < 0) throw new Error(`Document not found in manifest: ${relativePath}`);
   const target = direction === 'up' ? index - 1 : index + 1;
-  if (target < 0 || target >= project.book.content.length) return; // already at boundary
+  if (target < 0 || target >= project.book.content.length) return relativePath; // already at boundary
   const previous = [...project.book.content];
   // Swap positions in the array
   const tmp = project.book.content[index]!;
   project.book.content[index] = project.book.content[target]!;
   project.book.content[target] = tmp;
-  // Rename files on disk so NN- prefix matches new order, then persist
+  // Rename numbered chapter files only, then persist the manuscript order.
   try {
-    await renumberContent(project);
+    const renamed = await renumberContent(project);
+    return renamed.get(relativePath) ?? relativePath;
   } catch (error) {
     project.book.content = previous;
     throw error;

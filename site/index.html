@@ -18,6 +18,7 @@
     <nav aria-label="Main navigation">
       <button class="nav-key" type="button" data-open-palette aria-label="Open commands">/ <span>commands</span></button>
       <button class="nav-key" type="button" data-open-help aria-label="Open keyboard shortcuts">? <span>keys</span></button>
+      <a href="#install">Install</a>
       <a href="documentation.html">Documentation</a>
       <a href="#demo">Demo</a>
       <a class="nav-github" href="https://github.com/FranciscoAscue/loddi-tui">GitHub ↗</a>
@@ -27,9 +28,9 @@
     <section class="hero shell">
       <div class="eyebrow">&gt; MARKDOWN · TERMINAL · BOOKS <span class="cursor">_</span></div>
       <h1>Write the book.<br><em>Keep the words.</em></h1>
-      <p class="lede">A focused terminal workspace for Markdown manuscripts. Organize chapters, insert citations, and publish EPUB or PDF without locking your writing into an app.</p>
+      <p class="lede">Write Markdown in the terminal. Open one file or organize a book, manage BibTeX citations, and export EPUB or PDF.</p>
       <div class="actions">
-        <a class="button primary" href="documentation.html#install">Get started ↗</a>
+        <a class="button primary" href="#install">Install Loddi ↓</a>
         <a class="button secondary" href="documentation.html">Read the docs</a>
       </div>
       <p class="shortcut-tease">Press <kbd>/</kbd> to navigate this site <span>·</span> <kbd>?</kbd> for keyboard shortcuts</p>
@@ -42,19 +43,34 @@
 <span class="muted">Search manuscript or type / for commands</span>
 <span class="prompt">›</span> /export epub</code></pre>
       </div>
-      <p class="fine-print">Local-first files · Windows, macOS and Linux · Node.js 22.20+</p>
+      <p class="fine-print">Local files · Windows, macOS and Linux · Node.js 22.20+ for source installation</p>
+    </section>
+    <section id="install" class="install-band shell" aria-labelledby="install-title">
+      <div class="section-heading"><span class="eyebrow">INSTALL FROM GITHUB</span><h2 id="install-title">Copy the command for your system.</h2></div>
+      <p>These commands install the current source package. They require Node.js 22.20 or newer and npm. The npm registry package and portable downloads are not available yet.</p>
+      <div class="install-grid">
+        <div><h3>Linux / macOS</h3><p>Read the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/scripts/install.sh">installer</a> first. It builds the package and installs it globally without sudo.</p><pre><code>curl -fsSL https://raw.githubusercontent.com/FranciscoAscue/loddi-tui/master/scripts/install.sh | bash
+loddi --version</code></pre></div>
+        <div><h3>Windows PowerShell</h3><p>Install Git, Node.js and npm first. Package the checkout, then install the generated tarball.</p><pre><code>git clone https://github.com/FranciscoAscue/loddi-tui.git
+cd loddi-tui
+npm ci
+npm pack --ignore-scripts
+npm install --global .\loddi-tui-0.1.0.tgz
+loddi --version</code></pre></div>
+      </div>
+      <p class="install-note">The tarball filename changes with the package version. Use the filename printed by <code>npm pack</code>. For portable archives and troubleshooting, open the <a href="documentation.html#install">installation guide</a>.</p>
     </section>
     <section class="features shell" aria-labelledby="features-title">
-      <div class="section-heading"><span class="eyebrow">THE WORKFLOW</span><h2 id="features-title">Everything around the writing, kept quiet.</h2></div>
+      <div class="section-heading"><span class="eyebrow">AVAILABLE NOW</span><h2 id="features-title">From Markdown to manuscript.</h2></div>
       <div class="feature-grid">
-        <article><span class="feature-number">01 / DRAFT</span><h3>Markdown stays Markdown</h3><p>Open a single <code>.md</code> file or a whole book folder. The source editor highlights Markdown and fenced code by language.</p></article>
-        <article><span class="feature-number">02 / ORGANIZE</span><h3>A manuscript that makes sense</h3><p>Cover, front matter, chapters and an automatically generated contents file. Search instead of scrolling through a long tree.</p></article>
-        <article><span class="feature-number">03 / REFERENCE</span><h3>Citations at hand</h3><p>Import BibTeX exported from Zotero, browse references, and insert single or multiple citations from the editor.</p></article>
-        <article><span class="feature-number">04 / PUBLISH</span><h3>Export when ready</h3><p>Create EPUB with Pandoc, or PDF with Pandoc and Typst. Optional tools can be installed locally on demand.</p></article>
+        <article><span class="feature-number">01 / WRITE</span><h3>Edit plain Markdown</h3><p>Open any <code>.md</code> file. The editor highlights Markdown and fenced code, and inserts code, Mermaid, math or images from one menu.</p></article>
+        <article><span class="feature-number">02 / ORGANIZE</span><h3>Keep the book in order</h3><p>Create cover, sections and chapters. Search long manuscripts, reorder documents and regenerate <code>SUMMARY.md</code>. Unstructured Markdown keeps its filename.</p></article>
+        <article><span class="feature-number">03 / CITE</span><h3>Use your bibliography</h3><p>Import BibTeX from Zotero, edit references and insert one or several citations without leaving the editor.</p></article>
+        <article><span class="feature-number">04 / EXPORT</span><h3>Build EPUB or PDF</h3><p>Install Pandoc and Typst when needed. Check manuscript issues before export. Loddi also checks for updates and asks before installing one.</p></article>
       </div>
     </section>
     <section class="commands-band shell" aria-labelledby="commands-title">
-      <div><span class="eyebrow">BUILT FOR THE KEYBOARD</span><h2 id="commands-title">One prompt. The whole manuscript.</h2><p>Search files from the launcher, open commands with <kbd>/</kbd>, and use <kbd>?</kbd> when you need a reminder. Editing, references and export stay one keystroke away.</p></div>
+      <div><span class="eyebrow">BUILT FOR THE KEYBOARD</span><h2 id="commands-title">Search, then act.</h2><p>Search documents in the launcher. Press <kbd>/</kbd> for commands or <kbd>?</kbd> for shortcuts. Press <kbd>Ctrl+P</kbd> inside the editor to insert Markdown blocks or open the optional Codex assistant.</p></div>
       <div class="command-sample" aria-label="Example Loddi keyboard commands"><div><span class="prompt">/</span><span>export epub</span><span class="muted">publish your book</span></div><div><span class="prompt">/</span><span>references</span><span class="muted">manage citations</span></div><div><span class="prompt">Ctrl+P</span><span>insert</span><span class="muted">code · math · Mermaid</span></div><div><span class="prompt">Ctrl+S</span><span>save</span><span class="muted">keep your draft</span></div></div>
     </section>
     <section id="demo" class="demo-band" aria-labelledby="demo-title">

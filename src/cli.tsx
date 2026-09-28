@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import process from 'node:process';
+import {createInterface} from 'node:readline/promises';
 import path from 'node:path';
 import React from 'react';
 import {Command} from 'commander';
@@ -9,11 +10,48 @@ import {checkProject} from './services/check.js';
 import {exportBook, ExportFormat} from './services/export.js';
 import {inspectTools, installPandoc, installTypst, platformLabel} from './services/tools.js';
 import {App, StandaloneEditor} from './ui/App.js';
+import {checkForUpdate, currentVersion, installPortableUpdate} from './services/update.js';
 
 const program = new Command()
   .name('loddi')
   .description('Terminal publishing environment for Markdown books')
-  .version('0.1.0');
+  .version(currentVersion);
+
+program
+  .command('update')
+  .description('Check for and install the latest portable release side by side')
+  .option('--check', 'Only check for a newer release')
+  .option('-y, --yes', 'Confirm installation without an interactive prompt')
+  .action(async (options: {check?: boolean; yes?: boolean}) => {
+    const status = await checkForUpdate();
+    if (status.kind === 'none') {
+      process.stdout.write('No Loddi release has been published yet.\n');
+    } else if (status.kind === 'current') {
+      process.stdout.write(`Loddi v${currentVersion} is current.\n`);
+    } else if (status.kind === 'ahead') {
+      process.stdout.write(`Loddi v${currentVersion} is newer than the latest published release.\n`);
+    } else {
+      process.stdout.write(`Loddi v${status.version} is available (current: v${currentVersion}).\n`);
+      if (!status.asset) {
+        process.stdout.write('No portable archive is available for this platform yet.\n');
+      } else if (!options.check) {
+        let confirmed = options.yes === true;
+        if (!confirmed && process.stdin.isTTY && process.stdout.isTTY) {
+          const prompt = createInterface({input: process.stdin, output: process.stdout});
+          try {
+            confirmed = /^y(es)?$/i.test((await prompt.question('Install this verified release beside the current version? [y/N] ')).trim());
+          } finally { prompt.close(); }
+        }
+        if (!confirmed) {
+          process.stdout.write(process.stdin.isTTY ? 'Update cancelled.\n' : 'Update not installed. Run loddi update --yes to confirm non-interactively.\n');
+          return;
+        }
+        const launcher = await installPortableUpdate(status, message => process.stdout.write(`${message}\n`));
+        process.stdout.write(`Run the new version with: ${JSON.stringify(launcher)}\n`);
+        process.stdout.write('Your existing Loddi installation and manuscripts were not changed.\n');
+      }
+    }
+  });
 
 program
   .command('init')

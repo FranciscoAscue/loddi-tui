@@ -38,6 +38,7 @@ export function HelpScreen({onBack}: {onBack: () => void}) {
           <Text dimColor>Ctrl+N chapter · Ctrl+T section · Ctrl+O cover</Text>
           <Text dimColor>Ctrl+E rename · Ctrl+W remove · Alt+↑/↓ reorder</Text>
           <Text dimColor>Ctrl+X export · Ctrl+R review · Ctrl+D/Q quit</Text>
+          <Text dimColor>/update checks releases · I installs a new version beside this one</Text>
 
           <Section label="Editor" />
           <Text dimColor>Ctrl+S save · Ctrl+P insert · Ctrl+F find · Ctrl+I cite</Text>

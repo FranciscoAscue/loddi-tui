@@ -40,6 +40,8 @@
     "test": "vitest run",
     "check": "npm run typecheck && npm run test && npm run build",
     "smoke:package": "npm run build && node scripts/smoke-package.mjs",
+    "portable:build": "npm run build && node scripts/build-portable.mjs",
+    "portable:smoke": "node scripts/smoke-portable.mjs",
     "smoke:publishing": "npm run build && node scripts/smoke-publishing.mjs",
     "release:check": "node scripts/check-release.mjs",
     "playground:init": "npm run build && node scripts/create-playground.mjs",

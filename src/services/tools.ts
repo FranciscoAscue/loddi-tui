@@ -13,13 +13,13 @@ import {
   stat,
   writeFile,
 } from 'node:fs/promises';
-import os from 'node:os';
 import path from 'node:path';
 import {spawn} from 'node:child_process';
 import {pipeline} from 'node:stream/promises';
 import * as tar from 'tar';
 import unzipper from 'unzipper';
 import {createDecompressStream} from '@napi-rs/lzma/xz';
+import {dataDirectory} from './user-paths.js';
 
 const PANDOC_GITHUB_API = 'https://api.github.com/repos/jgm/pandoc/releases/latest';
 const TYPST_GITHUB_API = 'https://api.github.com/repos/typst/typst/releases/latest';
@@ -52,17 +52,6 @@ export interface ToolStatus {
   requiredFor: string;
   canInstall: boolean;
   installHint: string;
-}
-
-function dataDirectory(): string {
-  if (process.env['LODDI_HOME']) return path.resolve(process.env['LODDI_HOME']);
-  if (process.platform === 'win32') {
-    return path.join(process.env['LOCALAPPDATA'] || os.homedir(), 'Loddi');
-  }
-  if (process.platform === 'darwin') {
-    return path.join(os.homedir(), 'Library', 'Application Support', 'Loddi');
-  }
-  return path.join(process.env['XDG_DATA_HOME'] || path.join(os.homedir(), '.local', 'share'), 'loddi');
 }
 
 function toolDirectory(name: string): string {

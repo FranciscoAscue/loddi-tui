@@ -15,10 +15,18 @@ type DocumentEntry = {
   kind: 'cover' | 'section' | 'chapter' | 'document';
   path: string;
   label: string;
+  position?: number;
 };
+
+function displayTitle(entry: DocumentEntry): string {
+  return entry.kind === 'chapter' || entry.kind === 'section'
+    ? entry.label.replace(/^\d+-/, '')
+    : entry.label;
+}
 
 export function Dashboard({
   project,
+  updateNotice,
   commands,
   onOpen,
   onChanged,
@@ -27,6 +35,7 @@ export function Dashboard({
   active = true,
 }: {
   project: BookProject;
+  updateNotice?: string | undefined;
   commands: SlashCommand[];
   onOpen: (relativePath: string) => void;
   onChanged: () => void;
@@ -48,11 +57,12 @@ export function Dashboard({
 
   const entries: DocumentEntry[] = [
     {kind: 'cover', path: project.book.cover.document, label: 'Cover'},
-    ...project.book.content.map(relativePath => ({
+    ...project.book.content.map((relativePath, index) => ({
       kind: relativePath.startsWith('frontmatter/') ? 'section' as const
         : relativePath.startsWith('chapters/') ? 'chapter' as const : 'document' as const,
       path: relativePath,
       label: path.basename(relativePath, path.extname(relativePath)),
+      position: index + 1,
     })),
   ];
 
@@ -122,9 +132,18 @@ export function Dashboard({
       return;
     }
     try {
-      await moveContentItem(project, entry.path, direction);
+      const previousPosition = project.book.content.indexOf(entry.path) + 1;
+      const movedPath = await moveContentItem(project, entry.path, direction);
+      const nextPosition = project.book.content.indexOf(movedPath) + 1;
+      if (previousPosition === nextPosition) {
+        setMessage('Already at the edge of the manuscript.');
+        return;
+      }
+      // A filtered list can hide the new position, so show the complete order.
+      setQuery('');
+      setSelected(nextPosition); // The cover occupies row zero.
       onChanged();
-      setMessage(`Moved ${entry.label} ${direction}.`);
+      setMessage(`Moved “${displayTitle(entry)}” ${previousPosition} → ${nextPosition} of ${project.book.content.length} · ${movedPath}`);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : String(error));
     }
@@ -240,7 +259,9 @@ export function Dashboard({
           {visibleResults.map((result, index) => {
             const resultIndex = windowStart + index;
             const isSelected = resultIndex === selectedIndex;
-            const primary = 'value' in result ? result.value : result.label;
+            const chapterNumber = 'value' in result || result.kind !== 'chapter' ? undefined : /^(\d+)-/.exec(result.label)?.[1];
+            const primary = 'value' in result ? result.value : result.kind === 'cover' ? result.label
+              : `${String(result.position).padStart(2, '0')} · ${chapterNumber ? `Ch ${chapterNumber} · ` : ''}${displayTitle(result)}`;
             const secondary = 'value' in result ? result.description : result.path;
             const marker = 'value' in result ? '›' : result.kind === 'cover' ? '◆' : '·';
             return (
@@ -297,6 +318,9 @@ export function Dashboard({
         </Box>
         {message !== 'Ready' && (
           <Box justifyContent="center"><Text color="yellow">{message}</Text></Box>
+        )}
+        {updateNotice && message === 'Ready' && (
+          <Box justifyContent="center"><Text color="yellow">{updateNotice}</Text></Box>
         )}
       </Box>
     </Box>

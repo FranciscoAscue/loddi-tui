@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Box, useApp, useStdout} from 'ink';
 import {BookProject} from '../services/project.js';
 import {Dashboard} from './Dashboard.js';
@@ -11,6 +11,8 @@ import {ReviewScreen} from './ReviewScreen.js';
 import {HelpScreen} from './HelpScreen.js';
 import {FontsScreen} from './FontsScreen.js';
 import {ReferencesScreen} from './ReferencesScreen.js';
+import {UpdateScreen} from './UpdateScreen.js';
+import {startupUpdateNotice} from '../services/update.js';
 
 type Modal =
   | {kind: 'dependencies'; install?: 'pandoc' | 'typst'}
@@ -18,6 +20,7 @@ type Modal =
   | {kind: 'review'}
   | {kind: 'fonts'}
   | {kind: 'references'}
+  | {kind: 'update'; automatic?: boolean}
   | {kind: 'help'};
 
 export function App({project}: {project: BookProject}) {
@@ -29,6 +32,24 @@ export function App({project}: {project: BookProject}) {
   // Bumped whenever the bibliography file is saved from /references so the
   // editor's citation picker reloads without requiring a full page refresh.
   const [bibRevision, setBibRevision] = useState(0);
+  const [updateNotice, setUpdateNotice] = useState<string>();
+  const [pendingUpdatePrompt, setPendingUpdatePrompt] = useState(false);
+  useEffect(() => {
+    let active = true;
+    void startupUpdateNotice().then(notice => {
+      if (active) {
+        setUpdateNotice(notice);
+        if (notice) setPendingUpdatePrompt(true);
+      }
+    });
+    return () => { active = false; };
+  }, []);
+  useEffect(() => {
+    if (pendingUpdatePrompt && !openDocument && !modal) {
+      setPendingUpdatePrompt(false);
+      setModal({kind: 'update', automatic: true});
+    }
+  }, [pendingUpdatePrompt, openDocument, modal]);
   const commands = useMemo<SlashCommand[]>(() => [
     {value: '/export', description: 'Open export options'},
     {value: '/export pdf', description: 'Export PDF now'},
@@ -40,6 +61,7 @@ export function App({project}: {project: BookProject}) {
     {value: '/references', description: 'Browse or import a BibTeX library'},
     {value: '/review', description: 'Review manuscript documents'},
     {value: '/check', description: 'Review manuscript diagnostics'},
+    {value: '/update', description: 'Check for and install a newer Loddi'},
     {value: '/help', description: 'Show shortcuts and commands'},
     {value: '/quit', description: 'Exit Loddi'},
   ], []);
@@ -65,6 +87,10 @@ export function App({project}: {project: BookProject}) {
     else if (command === '/fonts') setModal({kind: 'fonts'});
     else if (command === '/references') setModal({kind: 'references'});
     else if (command === '/review' || command === '/check') setModal({kind: 'review'});
+    else if (command === '/update') {
+      setPendingUpdatePrompt(false);
+      setModal({kind: 'update'});
+    }
     else if (command === '/help') setModal({kind: 'help'});
     else if (command === '/quit') exit();
   }
@@ -75,6 +101,7 @@ export function App({project}: {project: BookProject}) {
       {!modal && (
         <Dashboard
           project={project}
+          updateNotice={updateNotice}
           commands={commands}
           active
           onOpen={setOpenDocument}
@@ -131,6 +158,11 @@ export function App({project}: {project: BookProject}) {
       {modal?.kind === 'help' && (
         <Overlay width={width}>
           <HelpScreen onBack={() => setModal(undefined)} />
+        </Overlay>
+      )}
+      {modal?.kind === 'update' && (
+        <Overlay width={width}>
+          <UpdateScreen onBack={() => setModal(undefined)} promptOnAvailable={modal.automatic === true} />
         </Overlay>
       )}
     </Box>

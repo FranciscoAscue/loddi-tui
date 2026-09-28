@@ -46,6 +46,9 @@ La interfaz de Loddi se mantiene en inglés. El contenido de los libros puede es
 - [x] Carpeta `playground/` y comandos npm para crear, abrir, revisar y limpiar un libro de prueba.
 - [x] Instrucciones de instalación desde el checkout para Windows, macOS y Linux.
 - [x] Instalador `scripts/install.sh` para Linux/macOS mediante `curl | bash` y ruta Git + npm para Windows; ambas compilan y empaquetan antes de instalar globalmente.
+- [x] Empaquetado portable `.tar.gz` con Node incluido, suma SHA-256, prueba de extracción/CLI y workflow manual para Linux x64/ARM64, macOS Intel/ARM64 y Windows x64.
+- [x] Consulta de actualización al abrir el lanzador (caché diaria y sin bloqueo), confirmación automática en la TUI cuando hay una nueva versión y confirmación interactiva en `loddi update` (`--yes` para scripts); descarga verificada por SHA-256 e instalación paralela sin sobrescribir manuscritos ni la versión en ejecución.
+- [x] Reordenación con selección persistente y posición visible; solo se renumeran los Markdown numerados de `chapters/`, conservando los nombres de documentos adoptados y secciones.
 - [x] Logo LODDI corregido con bloque de cinco caracteres correctos en el lanzador.
 - [x] Eliminación de referencias desde `/references` con confirmación (`Ctrl+D`).
 - [x] Vista de detalle de referencia seleccionada desde `/references` (Enter).
@@ -79,6 +82,7 @@ La interfaz de Loddi se mantiene en inglés. El contenido de los libros puede es
 - [ ] Los diagramas Mermaid no se renderizan automáticamente en PDF/EPUB (se necesita un pre-procesador externo como `mermaid-filter` o `mmdc`).
 - [ ] La matriz de CI está configurada, pero todavía no se ha ejecutado en un repositorio remoto; falta validar instalación y publicación en Windows, macOS y Linux ARM64.
 - [ ] El paquete npm aún no está publicado; se espera la revisión del titular del copyright MIT (`FranciscoAscue`) y las validaciones multiplataforma.
+- [ ] Ejecutar el workflow portable en los cinco targets; adjuntar los archivos aprobados a una GitHub Release solamente cuando se autorice publicar la descarga directa.
 - [x] Preparar la rama `gh-pages` con el sitio estático, sin configurar la fuente de publicación en GitHub Pages.
 - [ ] Revisar una demostración real del editor y decidir cuándo activar GitHub Pages; no iniciar despliegue antes de autorización explícita.
 - [ ] La prueba automática de publicación aún comprueba principalmente cabeceras/tamaño de PDF y EPUB; falta inspeccionar contenido, imágenes, citas, índice y saltos de página.

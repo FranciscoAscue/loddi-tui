@@ -1,6 +1,10 @@
 # Installing Loddi
 
-Loddi uses the same npm package on Windows, macOS, and Linux. Node.js 22.20 or newer is required. Pandoc and Typst remain optional.
+The source-based npm installation works on Windows, macOS, and Linux and requires Node.js 22.20 or newer. Pandoc and Typst remain optional.
+
+For a download that does **not** require Node.js or npm on the destination computer, see [Portable downloads](PORTABLE.md). Portable release assets have not been published yet; the steps below install from source today.
+
+After portable assets are published, Loddi checks for updates at startup and asks before installation. Use `loddi update --check` to check from the terminal, or `loddi update` to check and confirm installation of a verified new version beside the current one. Non-interactive automation requires `loddi update --yes`. See the [update details](PORTABLE.md#updating-later). Source installations can use the same command to obtain a portable copy, but it does not replace an npm-global or checkout installation.
 
 ## Quick install from GitHub
 

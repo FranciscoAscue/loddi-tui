@@ -85,7 +85,7 @@ describe('book project', () => {
     ]);
 
     // Move "Second" (index 1) up — it swaps with "First" and both are renumbered
-    await moveContentItem(project, 'chapters/02-second.md', 'up');
+    expect(await moveContentItem(project, 'chapters/02-second.md', 'up')).toBe('chapters/01-second.md');
     expect(project.book.content).toEqual([
       'chapters/01-second.md',
       'chapters/02-first.md',
@@ -118,6 +118,37 @@ describe('book project', () => {
       'chapters/02-third.md',
       'chapters/03-first.md',
     ]);
+  });
+
+  it('reorders adopted Markdown without renaming files, even when they have numeric names', async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), 'loddi-adopt-order-'));
+    await mkdir(path.join(root, 'chapters'));
+    await writeFile(path.join(root, '01-draft.md'), '# Draft\n', 'utf8');
+    await writeFile(path.join(root, '02-notes.md'), '# Notes\n', 'utf8');
+    await writeFile(path.join(root, 'chapters', 'loose.md'), '# Loose\n', 'utf8');
+    const project = await initializeProject(root, 'Adopted', {adoptExisting: true});
+    expect(await moveContentItem(project, '02-notes.md', 'up')).toBe('02-notes.md');
+    expect(await moveContentItem(project, 'chapters/loose.md', 'up')).toBe('chapters/loose.md');
+    expect(project.book.content).toEqual(['02-notes.md', 'chapters/loose.md', '01-draft.md']);
+    expect(await readFile(path.join(root, '01-draft.md'), 'utf8')).toBe('# Draft\n');
+    expect(await readFile(path.join(root, '02-notes.md'), 'utf8')).toBe('# Notes\n');
+    expect(await readFile(path.join(root, 'chapters', 'loose.md'), 'utf8')).toBe('# Loose\n');
+    expect((await loadProject(root)).book.content).toEqual(project.book.content);
+  });
+
+  it('only renumbers numbered chapters in a mixed manuscript', async () => {
+    const root = await mkdtemp(path.join(os.tmpdir(), 'loddi-mixed-order-'));
+    const project = await initializeProject(root, 'Mixed');
+    const section = await addSection(project, 'Preface');
+    const first = await addChapter(project, 'First');
+    const second = await addChapter(project, 'Second');
+    expect(await moveContentItem(project, second, 'up')).toBe('chapters/01-second.md');
+    expect(project.book.content).toEqual([section, 'chapters/01-second.md', 'chapters/02-first.md']);
+    expect(await readDocument(project, section)).toContain('Preface');
+    expect(await moveContentItem(project, section, 'down')).toBe(section);
+    expect(project.book.content).toEqual(['chapters/01-second.md', section, 'chapters/02-first.md']);
+    expect(await readDocument(project, section)).toContain('Preface');
+    await expect(readDocument(project, first)).rejects.toThrow();
   });
 
   it('does not move the first item up or the last item down', async () => {

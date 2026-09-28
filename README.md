@@ -1,3 +1,6 @@
+
+
+
 # Loddi TUI
 
 Loddi is a cross-platform terminal publishing environment for writing books in Markdown. Project files remain plain Markdown, YAML, BibTeX, images, and other portable assets.
@@ -13,11 +16,12 @@ Loddi is a cross-platform terminal publishing environment for writing books in M
 - project checks and optional dependency detection;
 - EPUB and PDF export pipeline;
 - user-local, on-demand Pandoc and Typst installation;
+- startup release check with an installation confirmation, plus `loddi update` and `/update` for verified side-by-side portable updates;
 - inline slash commands and modal operational screens;
 - publication page boundaries for cover, contents, front matter, and chapters;
 - multilingual Unicode manuscripts and system-font selection for Typst PDF export;
 - BibTeX bibliography management with import, search, deletion, and multi-citation insertion;
-- manuscript structure management: reorder and remove chapters and sections from the launcher;
+- manuscript structure management: reorder and remove documents from the launcher; only numbered `chapters/` files are renamed when reordered;
 - document renaming with manifest, contents heading, summary, and ordinary Markdown links updated;
 - highlighted Markdown source for images, Mermaid blocks, and LaTeX math; full publication rendering is handled by Pandoc.
 
@@ -27,13 +31,15 @@ Loddi is a cross-platform terminal publishing environment for writing books in M
 - current macOS releases on Intel and Apple Silicon;
 - x64 and ARM64 Linux distributions.
 
-Node.js 22.20 or newer is required. Pandoc and Typst are optional and only needed for publishing:
+Source installation requires Node.js 22.20 or newer; portable archives bundle it. Pandoc and Typst are optional and only needed for publishing:
 
 - EPUB requires Pandoc;
 - PDF uses Pandoc and Typst by default;
 - Loddi can download official Pandoc and Typst binaries without administrator permissions.
 
 See [Installation](docs/INSTALL.md) for platform-specific instructions, update, and uninstall steps.
+
+For a Node-free destination machine, the [portable archive workflow](docs/PORTABLE.md) bundles Node and production dependencies into a platform-specific `.tar.gz`. Linux x64 has been built locally; the Windows, macOS and Linux ARM64 archives await their workflow smoke tests. No GitHub Release asset has been published yet.
 
 Until the npm registry release, Linux and macOS users can inspect and run [`scripts/install.sh`](scripts/install.sh) with:
 
@@ -53,7 +59,7 @@ npm run build
 
 ## Documentation site
 
-The static landing page and documentation are in [`site/`](site/README.md), with local asciicast demos. Preview them with `npx serve site`. The `gh-pages` branch contains a copy ready for review, but GitHub Pages is not configured for deployment. On the website, `/` opens navigation commands and `?` shows shortcuts.
+The static landing page and documentation are in [`site/`](site/README.md), with local asciicast demos. Preview them with `npx serve site`. The `gh-pages` branch is the publishing copy and must be synchronized with `site/` before deployment; GitHub Pages is not configured yet. On the website, `/` opens navigation commands and `?` shows shortcuts.
 
 The package can be checked without a global install:
 
@@ -184,7 +190,7 @@ Launcher:
 - `Ctrl+X`: export;
 - `Ctrl+D` or `Ctrl+Q`: quit;
 - `Ctrl+R`: manuscript review;
-- `Alt+↑` / `Alt+↓`: reorder the selected chapter or section;
+- `Alt+↑` / `Alt+↓`: reorder the selected document; the moved item stays selected and its new position is shown. Only numbered `chapters/` filenames change;
 - `Ctrl+E`: rename the selected manuscript document (the cover remains a fixed entry);
 - `Ctrl+W`: remove the selected document from the manifest (the file on disk is kept);
 

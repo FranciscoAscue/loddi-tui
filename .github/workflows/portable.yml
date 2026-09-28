@@ -1,0 +1,35 @@
+name: Loddi portable archives
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  portable:
+    name: Portable · ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {target: linux-x64, os: ubuntu-latest}
+          - {target: linux-arm64, os: ubuntu-24.04-arm}
+          - {target: macos-x64, os: macos-15-intel}
+          - {target: macos-arm64, os: macos-15}
+          - {target: windows-x64, os: windows-latest}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.20.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run portable:build
+      - run: npm run portable:smoke
+      - uses: actions/upload-artifact@v4
+        with:
+          name: loddi-${{ matrix.target }}
+          path: release/*.tar.gz*
+          if-no-files-found: error
