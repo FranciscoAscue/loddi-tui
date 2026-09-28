@@ -1,0 +1,61 @@
+name: Loddi portability
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Package · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - ubuntu-24.04-arm
+          - windows-latest
+          - macos-15-intel
+          - macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22.20.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - run: npm run smoke:package
+
+  publishing:
+    name: Publishing tools · ${{ matrix.os }}
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - ubuntu-24.04-arm
+          - windows-latest
+          - macos-15-intel
+          - macos-latest
+    env:
+      LODDI_HOME: ${{ runner.temp }}/loddi-tools
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22.20.0'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: node dist/cli.js tools install pandoc
+      - run: node dist/cli.js tools install typst
+      - run: npm run smoke:publishing

@@ -1,0 +1,76 @@
+{
+  "name": "loddi-tui",
+  "version": "0.1.0",
+  "description": "Terminal publishing environment for writing and exporting Markdown books — editor, bibliography manager, and one-command EPUB/PDF export",
+  "keywords": [
+    "markdown",
+    "book",
+    "writing",
+    "tui",
+    "terminal",
+    "epub",
+    "pdf",
+    "pandoc",
+    "typst",
+    "bibtex",
+    "bibliography"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FranciscoAscue/loddi-tui.git"
+  },
+  "homepage": "https://github.com/FranciscoAscue/loddi-tui#readme",
+  "bugs": {
+    "url": "https://github.com/FranciscoAscue/loddi-tui/issues"
+  },
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "loddi": "dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "docs"
+  ],
+  "scripts": {
+    "dev": "tsx src/cli.tsx",
+    "build": "node scripts/clean-dist.mjs && tsc -p tsconfig.build.json",
+    "start": "node dist/cli.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run test && npm run build",
+    "smoke:package": "npm run build && node scripts/smoke-package.mjs",
+    "smoke:publishing": "npm run build && node scripts/smoke-publishing.mjs",
+    "release:check": "node scripts/check-release.mjs",
+    "playground:init": "npm run build && node scripts/create-playground.mjs",
+    "playground:reset": "npm run build && node scripts/create-playground.mjs --reset",
+    "playground:open": "npm run build && node dist/cli.js playground",
+    "playground:check": "npm run build && node dist/cli.js check playground",
+    "playground:clean": "node scripts/remove-playground.mjs",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run release:check"
+  },
+  "engines": {
+    "node": ">=22.20"
+  },
+  "dependencies": {
+    "@napi-rs/lzma": "^1.5.1",
+    "commander": "^15.0.0",
+    "ink": "^7.1.1",
+    "ink-text-input": "^6.0.0",
+    "react": "^19.3.0",
+    "string-width": "^8.3.0",
+    "tar": "^7.5.22",
+    "unzipper": "^0.12.5",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.0",
+    "@types/unzipper": "^0.10.11",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.2"
+  }
+}

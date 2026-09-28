@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Install Loddi and learn the Markdown book workflow.">
+  <title>Documentation — Loddi</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="navigation.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar shell">
+    <a class="brand" href="index.html">LODDI <span>(Mirabilis)</span></a>
+    <nav aria-label="Main navigation">
+      <button class="nav-key" type="button" data-open-palette aria-label="Open commands">/ <span>commands</span></button>
+      <button class="nav-key" type="button" data-open-help aria-label="Open keyboard shortcuts">? <span>keys</span></button>
+      <a aria-current="page" href="documentation.html">Documentation</a>
+      <a href="index.html#demo">Demo</a>
+      <a class="nav-github" href="https://github.com/FranciscoAscue/loddi-tui">GitHub ↗</a>
+    </nav>
+  </header>
+  <main id="main" class="docs-layout shell">
+    <aside class="docs-nav" aria-label="Documentation sections">
+      <div class="eyebrow">GUIDE</div>
+      <a href="#install">Installation</a>
+      <a href="#quick-start">Quick start</a>
+      <a href="#editor">Editor</a>
+      <a href="#navigation">Navigation</a>
+      <a href="#citations">Citations</a>
+      <a href="#publishing">Publishing</a>
+      <a href="#files">Project files</a>
+      <a href="#limits">Current limits</a>
+    </aside>
+    <article class="docs-content">
+      <div class="eyebrow">DOCUMENTATION / 0.1</div>
+      <h1>Make room for the manuscript.</h1>
+      <p class="lede">Loddi works with ordinary Markdown files. Use it for one document, or initialize a folder to manage a complete book.</p>
+
+      <section id="install">
+        <h2>Installation</h2>
+        <p>Loddi requires Node.js 22.20 or newer and targets Windows, macOS and Linux. The package is not yet published on npm. Clone the repository and install from source:</p>
+        <pre><code>git clone https://github.com/FranciscoAscue/loddi-tui.git
+cd loddi-tui
+npm install
+npm run build
+npm link</code></pre>
+        <p>Then run <code>loddi --help</code>. From a checkout without <code>npm link</code>, use <code>node dist/cli.js</code> instead. Pandoc and Typst are optional until export. The <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/INSTALL.md">platform installation guide</a> covers PowerShell, updates and removal.</p>
+      </section>
+      <section id="navigation">
+        <h2>Navigation and commands</h2>
+        <p>The launcher searches the manuscript without filling the screen with a file tree. Use <kbd>↑</kbd> and <kbd>↓</kbd> to move through results, then <kbd>Enter</kbd> to open one. Type <kbd>/</kbd> for commands and <kbd>?</kbd> for contextual shortcuts. The command list scrolls when a book has many chapters.</p>
+        <p>Commands cover creating and renaming manuscript files, reviewing the book, managing references and fonts, checking/installing publishing tools, and exporting. Use the on-screen command list for the exact options available in your current context.</p>
+      </section>
+      <section id="quick-start">
+        <h2>Quick start</h2>
+        <pre><code>loddi init ./my-book --title "My book"
+loddi ./my-book</code></pre>
+        <p>Type to search your manuscript. Type <kbd>/</kbd> to reveal commands, or <kbd>?</kbd> for shortcuts. Open an existing Markdown file directly with <code>loddi ./notes.md</code>; it does not need a project.</p>
+        <p>To index existing Markdown files in a folder without moving them, use <code>loddi init ./folder --adopt</code>. This creates the book manifest and contents file; it stops if a <code>SUMMARY.md</code> already exists.</p>
+      </section>
+      <section id="editor">
+        <h2>Editor</h2>
+        <p>The editor shows highlighted Markdown source. Fenced code gets language-aware colors. Press <kbd>Ctrl+P</kbd> for a compact insertion menu: headings, bold, lists, code, Mermaid, LaTeX math and images. Choose with arrows and Enter or the menu letter. The same menu lets you focus or remove a Markdown block.</p>
+        <div class="key-grid">
+          <div><kbd>Ctrl+S</kbd><span>Save</span></div>
+          <div><kbd>Ctrl+P</kbd><span>Insert Markdown</span></div>
+          <div><kbd>Ctrl+F</kbd><span>Find</span></div>
+          <div><kbd>Ctrl+I</kbd><span>Insert citation</span></div>
+          <div><kbd>Ctrl+Del</kbd><span>Delete next word</span></div>
+          <div><kbd>Ctrl+← / →</kbd><span>Move by word</span></div>
+          <div><kbd>PgUp / PgDn</kbd><span>Move one editor page</span></div>
+          <div><kbd>Mouse</kbd><span>Click to position; wheel to scroll</span></div>
+          <div><kbd>Tab</kbd><span>Indent two spaces</span></div>
+          <div><kbd>Ctrl+Q</kbd><span>Back to launcher</span></div>
+        </div>
+        <p>The appearance of non-English text depends on your terminal font. Manuscript files are UTF-8.</p>
+        <p>The optional <kbd>A</kbd> entry in <kbd>Ctrl+P</kbd> opens a Codex assistant. Install the <a href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI</a> separately; Loddi checks its sign-in status and, if needed, <kbd>Enter</kbd> starts browser-based device authentication. Loddi displays the URL and code but never handles your password or API key. Insert is the default mode; <kbd>Tab</kbd> switches to Edit block or Chat. Codex runs read-only on a temporary excerpt and shows a proposal for review before Loddi changes the unsaved buffer. Mermaid, fenced code, and display LaTeX can be generated; review their syntax and rendered output before publishing.</p>
+      </section>
+      <section id="citations">
+        <h2>Citations</h2>
+        <p>Export a Zotero library as BibTeX and import the <code>.bib</code> file through <code>/references</code>. Loddi stores references in the project bibliography. In the editor, <kbd>Ctrl+I</kbd> searches entries; <kbd>Tab</kbd> collects multiple citations, <kbd>Ctrl+T</kbd> switches narrative and parenthetical form, and Enter inserts them.</p>
+        <p>Direct Zotero account synchronization is not implemented.</p>
+      </section>
+      <section id="publishing">
+        <h2>Publishing</h2>
+        <pre><code>loddi tools status
+loddi tools install pandoc
+loddi tools install typst
+loddi export epub ./my-book
+loddi export pdf ./my-book</code></pre>
+        <p>The same operations are available inside the launcher as <code>/install pandoc</code>, <code>/install typst</code>, <code>/export epub</code> and <code>/export pdf</code>. EPUB uses Pandoc; PDF also uses Typst by default. Managed tools are installed in user data, not system directories. Use <code>/fonts</code> to choose a font for PDF output. Export opens its own terminal screen, so status and errors remain visible.</p>
+      </section>
+      <section id="files">
+        <h2>Project files</h2>
+        <p>A project is a normal folder. The <code>book.yaml</code> manifest tracks the manuscript; <code>SUMMARY.md</code> is regenerated when its structure changes. Markdown chapters, front matter, cover, bibliography and images remain readable in other tools. Loddi separates cover, contents and manuscript units in publication output.</p>
+      </section>
+      <section id="limits">
+        <h2>Current limits</h2>
+        <p>Mermaid blocks are highlighted in the editor but exported as code unless an external preprocessor is configured. The terminal does not render images or full LaTeX; final layout is handled during export. Cross-platform CI is configured, but its remote results and a published npm package are still pending.</p>
+        <p>For development details and current status, read the <a href="https://github.com/FranciscoAscue/loddi-tui#readme">README</a> and <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/plan.md">plan</a>.</p>
+      </section>
+    </article>
+  </main>
+  <footer class="footer shell"><span>LODDI (Mirabilis) · MIT License</span><span><a href="index.html">Home</a> · <a href="https://github.com/FranciscoAscue/loddi-tui">Source</a></span></footer>
+</body>
+</html>
