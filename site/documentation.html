@@ -28,6 +28,7 @@
       <a href="#updates">Updates</a>
       <a href="#quick-start">Quick start</a>
       <a href="#editor">Editor</a>
+      <a href="#codex">Codex assistant</a>
       <a href="#navigation">Navigation</a>
       <a href="#citations">Citations</a>
       <a href="#publishing">Publishing</a>
@@ -99,7 +100,15 @@ loddi ./existing-folder</code></pre>
           <div><kbd>Ctrl+Q</kbd><span>Back to launcher</span></div>
         </div>
         <p>The appearance of non-English text depends on your terminal font. Manuscript files are UTF-8.</p>
-        <p>The optional <kbd>A</kbd> entry in <kbd>Ctrl+P</kbd> opens a Codex assistant. Install the <a href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI</a> separately; Loddi checks its sign-in status and, if needed, <kbd>Enter</kbd> starts browser-based device authentication. Loddi displays the URL and code but never handles your password or API key. Insert is the default mode; <kbd>Tab</kbd> switches to Edit block or Chat. Codex runs read-only on a temporary excerpt and shows a proposal for review before Loddi changes the unsaved buffer. Mermaid, fenced code, and display LaTeX can be generated; review their syntax and rendered output before publishing.</p>
+      </section>
+      <section id="codex">
+        <h2>Optional Codex assistant</h2>
+        <p>Loddi works without AI. To enable this feature, install the <a href="https://learn.chatgpt.com/docs/codex/cli">Codex CLI</a> separately, then sign in. If Node.js and npm are installed, run:</p>
+        <pre><code>npm install -g @openai/codex
+codex login
+codex login status</code></pre>
+        <p>In the Markdown editor, press <kbd>Ctrl+P</kbd>, then <kbd>A</kbd>. Insert is the default mode; <kbd>Tab</kbd> switches to Edit block or Chat. Describe the Markdown you want, such as a fenced code example, Mermaid diagram or display LaTeX. Loddi sends the current block or line to Codex in a read-only temporary workspace, not the whole manuscript. It shows a proposal before changing the unsaved editor buffer. Press <kbd>Enter</kbd> to apply a proposal and <kbd>Ctrl+S</kbd> to save. Chat answers do not edit the document.</p>
+        <p>If you are not signed in, Loddi can start device-code authentication and show the URL and code. This method may need to be enabled for your account or workspace; if it is unavailable, run <code>codex login</code> in a separate terminal and recheck in Loddi. Loddi does not ask for your password or API key. Review generated Markdown and the exported layout before publishing. See <a href="https://learn.chatgpt.com/docs/auth">Codex authentication</a> for sign-in options.</p>
       </section>
       <section id="citations">
         <h2>Citations</h2>

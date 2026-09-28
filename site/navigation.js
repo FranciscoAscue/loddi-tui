@@ -7,6 +7,7 @@
     { label: 'Quick start', detail: 'Create or open a manuscript', href: 'documentation.html#quick-start', key: 'Q' },
     { label: 'Navigation', detail: 'Search and commands', href: 'documentation.html#navigation', key: 'N' },
     { label: 'Editor', detail: 'Markdown and shortcuts', href: 'documentation.html#editor', key: 'E' },
+    { label: 'Codex assistant', detail: 'Optional AI in the editor', href: 'documentation.html#codex', key: 'A' },
     { label: 'Citations', detail: 'BibTeX and Zotero', href: 'documentation.html#citations', key: 'C' },
     { label: 'Publishing', detail: 'EPUB and PDF', href: 'documentation.html#publishing', key: 'B' },
     { label: 'Project files', detail: 'Manuscript structure', href: 'documentation.html#files', key: 'F' },

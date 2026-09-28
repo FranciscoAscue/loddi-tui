@@ -1,7 +1,8 @@
-
-
-
 # Loddi TUI
+
+<p align="center">
+  <img src="docs/loddi_logo.png" alt="LODDI (Mirabilis) logo" width="440">
+</p>
 
 Loddi is a cross-platform terminal publishing environment for writing books in Markdown. Project files remain plain Markdown, YAML, BibTeX, images, and other portable assets.
 
@@ -59,7 +60,7 @@ npm run build
 
 ## Documentation site
 
-The static landing page and documentation are in [`site/`](site/README.md), with local asciicast demos. Preview them with `npx serve site`. The `gh-pages` branch is the publishing copy and must be synchronized with `site/` before deployment; GitHub Pages is not configured yet. On the website, `/` opens navigation commands and `?` shows shortcuts.
+The [website](https://franciscoascue.github.io/loddi-tui/) and its source are in [`site/`](site/README.md), with local asciicast demos. Preview them with `npx serve site`. The `gh-pages` branch publishes the site and must be synchronized with `site/` when it changes. On the website, `/` opens navigation commands and `?` shows shortcuts.
 
 The package can be checked without a global install:
 
