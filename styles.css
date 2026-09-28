@@ -62,7 +62,7 @@ a:hover { color: #fff; }
 .features { padding: 70px 0 110px; }
 .section-heading { max-width: 570px; }
 .section-heading h2, .demo-copy h2 { font: 700 clamp(30px, 4vw, 50px)/1.15 ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: -.065em; margin: 16px 0 35px; }
-.feature-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px 14px; }
 .feature-grid article { border-top: 1px solid var(--line); padding: 23px 10px 0 0; }
 .feature-number { color: var(--soft); font: 11px ui-monospace, SFMono-Regular, Consolas, monospace; }
 .feature-grid h3 { font-size: 17px; margin: 17px 0 8px; }
