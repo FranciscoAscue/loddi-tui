@@ -1,0 +1,3 @@
+{"version":2,"width":84,"height":12,"title":"Loddi publishing tools"}
+[0.1,"o","$ loddi tools status\r\n"]
+[0.7,"o","Platform: Linux x64\r\n✓ Pandoc: pandoc 3.11\r\n✓ Typst: typst 0.15.1 (9dfd3a08)\r\n"]

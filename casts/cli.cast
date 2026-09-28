@@ -1,0 +1,3 @@
+{"version":2,"width":84,"height":22,"title":"Loddi CLI overview"}
+[0.1,"o","$ loddi --help\r\n"]
+[0.7,"o","Usage: loddi [options] [command] [directory]\r\n\r\nTerminal publishing environment for Markdown books\r\n\r\nArguments:\r\n  directory                    Project to open (default: \".\")\r\n\r\nOptions:\r\n  -V, --version                output the version number\r\n  -h, --help                   display help for command\r\n\r\nCommands:\r\n  init [options] [directory]   Create a Loddi project\r\n  check [directory]            Validate the project and external tools\r\n  export <format> [directory]  Export a book without opening the TUI\r\n  tools                        Inspect and install optional publishing tools\r\n"]

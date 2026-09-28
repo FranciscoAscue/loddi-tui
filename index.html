@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Loddi is a terminal workspace for Markdown books and EPUB/PDF export.">
+  <title>Loddi — write books in the terminal</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/asciinema-player@3.6.3/dist/bundle/asciinema-player.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/asciinema-player@3.6.3/dist/bundle/asciinema-player.min.js"></script>
+  <script defer src="demo.js"></script>
+  <script defer src="navigation.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="topbar shell">
+    <a class="brand" href="index.html">LODDI <span>(Mirabilis)</span></a>
+    <nav aria-label="Main navigation">
+      <button class="nav-key" type="button" data-open-palette aria-label="Open commands">/ <span>commands</span></button>
+      <button class="nav-key" type="button" data-open-help aria-label="Open keyboard shortcuts">? <span>keys</span></button>
+      <a href="documentation.html">Documentation</a>
+      <a href="#demo">Demo</a>
+      <a class="nav-github" href="https://github.com/FranciscoAscue/loddi-tui">GitHub ↗</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero shell">
+      <div class="eyebrow">&gt; MARKDOWN · TERMINAL · BOOKS <span class="cursor">_</span></div>
+      <h1>Write the book.<br><em>Keep the words.</em></h1>
+      <p class="lede">A focused terminal workspace for Markdown manuscripts. Organize chapters, insert citations, and publish EPUB or PDF without locking your writing into an app.</p>
+      <div class="actions">
+        <a class="button primary" href="documentation.html#install">Get started ↗</a>
+        <a class="button secondary" href="documentation.html">Read the docs</a>
+      </div>
+      <p class="shortcut-tease">Press <kbd>/</kbd> to navigate this site <span>·</span> <kbd>?</kbd> for keyboard shortcuts</p>
+      <div class="hero-terminal" aria-label="Example Loddi commands">
+        <div class="terminal-bar"><span>● ● ●</span><span>your terminal</span><span>⌘</span></div>
+        <pre><code><span class="prompt">$</span> loddi init ./my-book --title "My book"
+<span class="prompt">$</span> loddi ./my-book
+
+<span class="prompt">LODDI</span> <span class="muted">(Mirabilis)</span>
+<span class="muted">Search manuscript or type / for commands</span>
+<span class="prompt">›</span> /export epub</code></pre>
+      </div>
+      <p class="fine-print">Local-first files · Windows, macOS and Linux · Node.js 22.20+</p>
+    </section>
+    <section class="features shell" aria-labelledby="features-title">
+      <div class="section-heading"><span class="eyebrow">THE WORKFLOW</span><h2 id="features-title">Everything around the writing, kept quiet.</h2></div>
+      <div class="feature-grid">
+        <article><span class="feature-number">01 / DRAFT</span><h3>Markdown stays Markdown</h3><p>Open a single <code>.md</code> file or a whole book folder. The source editor highlights Markdown and fenced code by language.</p></article>
+        <article><span class="feature-number">02 / ORGANIZE</span><h3>A manuscript that makes sense</h3><p>Cover, front matter, chapters and an automatically generated contents file. Search instead of scrolling through a long tree.</p></article>
+        <article><span class="feature-number">03 / REFERENCE</span><h3>Citations at hand</h3><p>Import BibTeX exported from Zotero, browse references, and insert single or multiple citations from the editor.</p></article>
+        <article><span class="feature-number">04 / PUBLISH</span><h3>Export when ready</h3><p>Create EPUB with Pandoc, or PDF with Pandoc and Typst. Optional tools can be installed locally on demand.</p></article>
+      </div>
+    </section>
+    <section class="commands-band shell" aria-labelledby="commands-title">
+      <div><span class="eyebrow">BUILT FOR THE KEYBOARD</span><h2 id="commands-title">One prompt. The whole manuscript.</h2><p>Search files from the launcher, open commands with <kbd>/</kbd>, and use <kbd>?</kbd> when you need a reminder. Editing, references and export stay one keystroke away.</p></div>
+      <div class="command-sample" aria-label="Example Loddi keyboard commands"><div><span class="prompt">/</span><span>export epub</span><span class="muted">publish your book</span></div><div><span class="prompt">/</span><span>references</span><span class="muted">manage citations</span></div><div><span class="prompt">Ctrl+P</span><span>insert</span><span class="muted">code · math · Mermaid</span></div><div><span class="prompt">Ctrl+S</span><span>save</span><span class="muted">keep your draft</span></div></div>
+    </section>
+    <section id="demo" class="demo-band" aria-labelledby="demo-title">
+      <div class="shell demo-layout">
+        <div class="demo-copy">
+          <span class="eyebrow">IN THE TERMINAL</span>
+          <h2 id="demo-title">A small tour.</h2>
+          <p>CLI output in lightweight asciicast files. The interactive editor is best experienced locally with <code>loddi ./my-book</code>.</p>
+          <div class="demo-tabs" role="group" aria-label="Choose terminal demo">
+            <button class="demo-tab active" type="button" data-cast="casts/cli.cast" aria-pressed="true">CLI overview</button>
+            <button class="demo-tab" type="button" data-cast="casts/tools.cast" aria-pressed="false">Publishing tools</button>
+          </div>
+        </div>
+        <div class="demo-frame">
+          <div id="asciinema-demo" aria-label="Terminal recording"></div>
+          <pre id="demo-fallback" class="demo-fallback" hidden><code>Run: loddi --help
+Run: loddi tools status</code></pre>
+          <p class="demo-note">If playback is unavailable, see the commands in the <a href="documentation.html">documentation</a>.</p>
+        </div>
+      </div>
+    </section>
+    <section class="cta shell">
+      <span class="eyebrow">YOUR FILES, YOUR BOOK</span>
+      <h2>Start with a folder.<br>Finish with a book.</h2>
+      <a class="button primary" href="documentation.html#quick-start">Open the quick start →</a>
+    </section>
+  </main>
+  <footer class="footer shell"><span>LODDI (Mirabilis) · MIT License</span><span><a href="documentation.html">Documentation</a> · <a href="https://github.com/FranciscoAscue/loddi-tui">Source</a></span></footer>
+</body>
+</html>
