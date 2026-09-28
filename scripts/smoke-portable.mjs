@@ -33,8 +33,15 @@ try {
   }
   function run(args) {
     const executable = process.platform === 'win32' ? (process.env.ComSpec || 'cmd.exe') : launcher;
-    const commandArgs = process.platform === 'win32' ? ['/d', '/s', '/c', `"${launcher}"`, ...args] : args;
-    const result = spawnSync(executable, commandArgs, {cwd: temporary, encoding: 'utf8', windowsHide: true});
+    const commandArgs = process.platform === 'win32'
+      ? ['/d', '/s', '/c', `""${launcher}" ${args.map(arg => `"${arg.replaceAll('"', '""')}"`).join(' ')}"`]
+      : args;
+    const result = spawnSync(executable, commandArgs, {
+      cwd: temporary,
+      encoding: 'utf8',
+      windowsHide: true,
+      windowsVerbatimArguments: process.platform === 'win32',
+    });
     if (result.error) throw result.error;
     if (result.status !== 0) throw new Error(`${args.join(' ')} failed:\n${result.stderr || result.stdout}`);
     return result.stdout;
