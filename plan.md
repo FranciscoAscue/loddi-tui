@@ -70,7 +70,7 @@ La interfaz de Loddi se mantiene en inglés. El contenido de los libros puede es
 - [x] Atajos de creación, renombrado, revisión y exportación consultables con `?`, sin ocupar el lanzador.
 - [x] Landing y guía estáticas con estilo de terminal, paleta web `/`, ayuda `?` y ejemplos asciicast de CLI.
 - [x] Instalación global local mediante `npm link` y verificación del comando `loddi` para v0.1.0.
-- [x] Código de v0.1.0 y copia revisable del sitio preparados en `master` y `gh-pages` para push, sin habilitar GitHub Pages.
+- [x] Código de v0.1.0 y copia revisable del sitio enviados a `origin/master` y `origin/gh-pages`, sin habilitar GitHub Pages.
 
 ### Parcial o pendiente
 
