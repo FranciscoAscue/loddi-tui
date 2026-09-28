@@ -39,7 +39,7 @@ Source installation requires Node.js 22.20 or newer; portable archives bundle it
 
 See [Installation](docs/INSTALL.md) for platform-specific instructions, update, and uninstall steps.
 
-For a Node-free destination machine, the [portable archive workflow](docs/PORTABLE.md) bundles Node and production dependencies into a platform-specific `.tar.gz`. Linux x64 has been built locally; the Windows, macOS and Linux ARM64 archives await their workflow smoke tests. No GitHub Release asset has been published yet.
+For a Node-free destination machine, download the matching `.tar.gz` from [Loddi v0.1.0 on GitHub Releases](https://github.com/FranciscoAscue/loddi-tui/releases/tag/v0.1.0). The [portable archive guide](docs/PORTABLE.md) covers checksums and extraction. The Linux x64/ARM64, macOS Intel/Apple Silicon, and Windows x64 archives passed their platform smoke tests.
 
 Until the npm registry release, Linux and macOS users can inspect and run [`scripts/install.sh`](scripts/install.sh) with:
 

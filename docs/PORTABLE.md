@@ -14,7 +14,7 @@ This is a portable folder, **not a single binary**. Keep `loddi` or `loddi.cmd`,
 | macOS Apple Silicon | `macos-arm64.tar.gz` | `./loddi --help` |
 | Windows x64 | `windows-x64.tar.gz` | `.\loddi.cmd --help` in PowerShell |
 
-When release assets are published, download the archive matching your system from the [GitHub Releases page](https://github.com/FranciscoAscue/loddi-tui/releases). **No portable release asset has been published yet.** Until then, use the [source installer](INSTALL.md) or build an archive locally. GitHub's archive of the repository source is not the portable application.
+Download the archive matching your system from [Loddi v0.1.0 on GitHub Releases](https://github.com/FranciscoAscue/loddi-tui/releases/tag/v0.1.0), together with its `.sha256` file. All five archives passed their platform smoke tests. GitHub's automatically generated source archive is not the portable application.
 
 On Linux or macOS:
 
@@ -51,9 +51,9 @@ The Linux archive is built on a glibc-based runner and is not claimed to support
 
 ## Updating later
 
-After an official portable release is published, run `loddi update --check` to look for a new version, or `loddi update` to check and ask before downloading. For non-interactive scripts, use `loddi update --yes` to explicitly authorize installation. In the TUI, `/update` opens the same check. At startup, Loddi checks in the background (using a 24-hour cache) and, if a newer release is found, opens a confirmation panel before installing. Declining returns to the manuscript; nothing is downloaded automatically. Set `LODDI_NO_UPDATE_CHECK=1` to disable only the startup check and prompt.
+Run `loddi update --check` to look for a newer release, or `loddi update` to check and ask before downloading. For non-interactive scripts, use `loddi update --yes` to explicitly authorize installation. In the TUI, `/update` opens the same check. At startup, Loddi checks in the background (using a 24-hour cache) and, if a newer release is found, opens a confirmation panel before installing. Declining returns to the manuscript; nothing is downloaded automatically. Set `LODDI_NO_UPDATE_CHECK=1` to disable only the startup check and prompt.
 
-An update is installed **beside** the current version under the Loddi user-data directory (`LODDI_HOME/versions` if `LODDI_HOME` is set). The command prints the exact launcher path for the new version. Restart by using that path; the old installation and all manuscript folders remain unchanged. Loddi requires the release asset's SHA-256 digest and refuses an archive for the wrong operating system or architecture. No release exists yet, so today `loddi update` reports that there is nothing to download.
+An update is installed **beside** the current version under the Loddi user-data directory (`LODDI_HOME/versions` if `LODDI_HOME` is set). The command prints the exact launcher path for the new version. Restart by using that path; the old installation and all manuscript folders remain unchanged. Loddi requires the release asset's SHA-256 digest and refuses an archive for the wrong operating system or architecture. Version 0.1.0 reports itself as current; the updater will offer a later release when one is published.
 
 ## Why not one executable yet?
 

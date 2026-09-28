@@ -57,7 +57,7 @@ loddi --version</code></pre>
       <section id="portable">
         <h2>Portable downloads</h2>
         <p>The project can build platform-specific <code>.tar.gz</code> archives with Node.js included. A portable build runs without a separate Node or npm installation: use <code>./loddi</code> on Linux/macOS or <code>.\loddi.cmd</code> on Windows.</p>
-        <p>Portable assets are not part of the current GitHub installation instructions. Check <a href="https://github.com/FranciscoAscue/loddi-tui/releases">Releases</a> for published downloads and read the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/PORTABLE.md">portable guide</a> before using one. The build targets Linux x64/ARM64, macOS Intel/Apple Silicon and Windows x64.</p>
+        <p>Download <a href="https://github.com/FranciscoAscue/loddi-tui/releases/tag/v0.1.0">Loddi v0.1.0</a> for Linux x64/ARM64, macOS Intel/Apple Silicon or Windows x64. Download its adjacent <code>.sha256</code> file and check it before extraction. Read the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/PORTABLE.md">portable guide</a> for commands and limitations.</p>
       </section>
       <section id="updates">
         <h2>Updates</h2>
@@ -65,7 +65,7 @@ loddi --version</code></pre>
         <pre><code>loddi update --check   # check only
 loddi update           # ask before installing
 loddi update --yes     # confirm in a script</code></pre>
-        <p>The updater verifies the archive and installs it beside the current version. Restart using the launcher path it prints. It does not replace an npm-global installation or touch manuscript files. Without a published portable release, there is nothing to install. See the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/PORTABLE.md#updating-later">update guide</a>.</p>
+        <p>The updater verifies the archive and installs it beside the current version. Restart using the launcher path it prints. It does not replace an npm-global installation or touch manuscript files. Version 0.1.0 is currently the latest release, so it will not offer itself as an update. See the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/PORTABLE.md#updating-later">update guide</a>.</p>
       </section>
       <section id="navigation">
         <h2>Navigation and commands</h2>
@@ -121,8 +121,8 @@ loddi export pdf ./my-book</code></pre>
       </section>
       <section id="limits">
         <h2>Current limits</h2>
-        <p>The TUI highlights Mermaid blocks but does not render their diagrams. The terminal does not display images or full LaTeX. Use the exported file to check final layout. Zotero account sync is not available; import BibTeX instead. The npm registry package and portable GitHub Releases still require publication.</p>
-        <p>For development details and current status, read the <a href="https://github.com/FranciscoAscue/loddi-tui#readme">README</a> and <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/plan.md">plan</a>.</p>
+        <p>The TUI highlights Mermaid blocks but does not render their diagrams. The terminal does not display images or full LaTeX. Use the exported file to check final layout. Zotero account sync is not available; import BibTeX instead. The npm registry package is not published; use the portable GitHub Release or install from source.</p>
+        <p>For development details and current status, read the <a href="https://github.com/FranciscoAscue/loddi-tui#readme">README</a>.</p>
       </section>
     </article>
   </main>
