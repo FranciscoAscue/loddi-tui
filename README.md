@@ -41,7 +41,7 @@ Until the npm registry release, Linux and macOS users can inspect and run [`scri
 curl -fsSL https://raw.githubusercontent.com/FranciscoAscue/loddi-tui/master/scripts/install.sh | bash
 ```
 
-On Windows PowerShell, install directly from GitHub with `npm install --global "github:FranciscoAscue/loddi-tui#master"`. Both routes require Node.js 22.20+, npm and Git; they build the package from source. Review remote scripts before running them.
+On Windows PowerShell, clone the repository, run `npm ci`, create a tarball with `npm pack --ignore-scripts`, and install that tarball with `npm install --global .\loddi-tui-0.1.0.tgz`. Both routes require Node.js 22.20+ and npm; the shell route also requires curl and tar, and the Windows route requires Git. Review remote scripts before running them.
 
 ## Development
 

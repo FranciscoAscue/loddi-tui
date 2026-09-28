@@ -34,7 +34,7 @@
   ],
   "scripts": {
     "dev": "tsx src/cli.tsx",
-    "build": "node scripts/clean-dist.mjs && tsc -p tsconfig.build.json",
+    "build": "node scripts/clean-dist.mjs && tsc -p tsconfig.build.json && node scripts/make-cli-executable.mjs",
     "start": "node dist/cli.js",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

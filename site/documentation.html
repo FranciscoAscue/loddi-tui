@@ -39,14 +39,18 @@
 
       <section id="install">
         <h2>Installation</h2>
-        <p>Loddi requires Node.js 22.20 or newer and targets Windows, macOS and Linux. Git is also needed while installing from GitHub. The package is not yet published on npm.</p>
+        <p>Loddi requires Node.js 22.20 or newer and targets Windows, macOS and Linux. The package is not yet published on npm.</p>
         <p>Linux / macOS — inspect the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/scripts/install.sh">installer</a> before piping it to Bash:</p>
         <pre><code>curl -fsSL https://raw.githubusercontent.com/FranciscoAscue/loddi-tui/master/scripts/install.sh | bash
 loddi --version</code></pre>
         <p>Windows PowerShell:</p>
-        <pre><code>npm install --global "github:FranciscoAscue/loddi-tui#master"
+        <pre><code>git clone https://github.com/FranciscoAscue/loddi-tui.git
+cd loddi-tui
+npm ci
+npm pack --ignore-scripts
+npm install --global .\loddi-tui-0.1.0.tgz
 loddi --version</code></pre>
-        <p>These commands install from the current <code>master</code> branch. The script never uses <code>sudo</code> or installs Node.js. Pandoc and Typst are optional until export. See the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/INSTALL.md">platform installation guide</a> for source installation, updates, removal and troubleshooting.</p>
+        <p>The shell installer requires curl and tar; the Windows route also requires Git. Both build from <code>master</code> and then install a packaged copy. The script never uses <code>sudo</code> or installs Node.js. Pandoc and Typst are optional until export. See the <a href="https://github.com/FranciscoAscue/loddi-tui/blob/master/docs/INSTALL.md">platform installation guide</a> for updates, removal and troubleshooting.</p>
       </section>
       <section id="navigation">
         <h2>Navigation and commands</h2>

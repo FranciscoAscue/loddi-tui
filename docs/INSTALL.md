@@ -1,6 +1,6 @@
 # Installing Loddi
 
-Loddi uses the same npm package on Windows, macOS, and Linux. Node.js 22.20 or newer is required. Until Loddi is published on npm, installation from GitHub also requires Git. Pandoc and Typst remain optional.
+Loddi uses the same npm package on Windows, macOS, and Linux. Node.js 22.20 or newer is required. Pandoc and Typst remain optional.
 
 ## Quick install from GitHub
 
@@ -11,16 +11,20 @@ curl -fsSL https://raw.githubusercontent.com/FranciscoAscue/loddi-tui/master/scr
 loddi --version
 ```
 
-The script checks Node.js, npm and Git, installs Loddi globally through npm, and does not use `sudo`. It does not install Node.js or modify your shell configuration. If your npm global prefix is not writable, configure a user-owned Node/npm installation (for example with a Node version manager) and rerun it. A successful install needs npm's global bin directory on `PATH`.
+The script checks Node.js, npm, curl and tar; downloads a temporary source archive; builds and packages Loddi; then installs only the resulting npm package globally. It does not use `sudo`, install Node.js, or modify your shell configuration. If your npm global prefix is not writable, configure a user-owned Node/npm installation (for example with a Node version manager) and rerun it. A successful install needs npm's global bin directory on `PATH`.
 
 On Windows, run this in PowerShell or Windows Terminal after installing Node.js and Git:
 
 ```powershell
-npm install --global "github:FranciscoAscue/loddi-tui#master"
+git clone https://github.com/FranciscoAscue/loddi-tui.git
+cd loddi-tui
+npm ci
+npm pack --ignore-scripts
+npm install --global .\loddi-tui-0.1.0.tgz
 loddi --version
 ```
 
-These GitHub commands track `master`, so updates may change the installed code. npm runs this repository's `prepare` build when installing from Git. For a reproducible install, replace `#master` in the npm command with a reviewed commit hash. The installer URL itself should likewise be reviewed before piping it to Bash.
+`npm ci` runs the `prepare` build, and `npm pack` creates a portable package without depending on npm's Git-install behavior. The tarball name shown above matches v0.1.0; use the filename printed by `npm pack` if it changes. These commands track `master`, so updates may change the installed code. For a reproducible install, check out a reviewed commit before `npm ci`. Review the installer source before piping it to Bash.
 
 ## From npm (recommended once published)
 
@@ -37,7 +41,7 @@ The project uses the MIT license. Run `npm run release:check` before any eventua
 
 ### Update
 
-For the current GitHub installation, rerun the installer (Linux/macOS) or the Windows `npm install --global "github:FranciscoAscue/loddi-tui#master"` command. After a registry release, use `npm update --global loddi-tui`.
+For the current GitHub installation, rerun the installer (Linux/macOS) or pull the latest `master` and repeat the Windows `npm ci`, `npm pack` and `npm install --global` commands. After a registry release, use `npm update --global loddi-tui`.
 
 ### Uninstall
 

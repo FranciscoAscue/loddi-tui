@@ -1,5 +1,6 @@
 import {spawnSync} from 'node:child_process';
-import {mkdtemp, readFile, rm} from 'node:fs/promises';
+import {access, mkdtemp, readFile, rm} from 'node:fs/promises';
+import {constants} from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -19,6 +20,7 @@ function run(executable, args, cwd) {
 
 const temporary = await mkdtemp(path.join(os.tmpdir(), 'loddi-package-'));
 try {
+  if (process.platform !== 'win32') await access(path.join(root, 'dist', 'cli.js'), constants.X_OK);
   const packed = JSON.parse(run(process.execPath, [npmCli, 'pack', '--json', '--ignore-scripts', '--pack-destination', temporary], root));
   const filename = packed[0]?.filename;
   if (!filename || !filename.endsWith('.tgz')) throw new Error('npm pack did not produce a Loddi tarball.');
