@@ -45,6 +45,7 @@ La interfaz de Loddi se mantiene en inglés. El contenido de los libros puede es
 - [x] Contenido de manuscrito almacenado y leído como UTF-8.
 - [x] Carpeta `playground/` y comandos npm para crear, abrir, revisar y limpiar un libro de prueba.
 - [x] Instrucciones de instalación desde el checkout para Windows, macOS y Linux.
+- [x] Instalador `scripts/install.sh` para Linux/macOS mediante `curl | bash` y ruta npm desde GitHub para Windows; `prepare` compila al instalar desde Git.
 - [x] Logo LODDI corregido con bloque de cinco caracteres correctos en el lanzador.
 - [x] Eliminación de referencias desde `/references` con confirmación (`Ctrl+D`).
 - [x] Vista de detalle de referencia seleccionada desde `/references` (Enter).

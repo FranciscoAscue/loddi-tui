@@ -35,6 +35,14 @@ Node.js 22.20 or newer is required. Pandoc and Typst are optional and only neede
 
 See [Installation](docs/INSTALL.md) for platform-specific instructions, update, and uninstall steps.
 
+Until the npm registry release, Linux and macOS users can inspect and run [`scripts/install.sh`](scripts/install.sh) with:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/FranciscoAscue/loddi-tui/master/scripts/install.sh | bash
+```
+
+On Windows PowerShell, install directly from GitHub with `npm install --global "github:FranciscoAscue/loddi-tui#master"`. Both routes require Node.js 22.20+, npm and Git; they build the package from source. Review remote scripts before running them.
+
 ## Development
 
 ```bash

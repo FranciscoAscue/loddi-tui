@@ -47,7 +47,7 @@
     "playground:open": "npm run build && node dist/cli.js playground",
     "playground:check": "npm run build && node dist/cli.js check playground",
     "playground:clean": "node scripts/remove-playground.mjs",
-    "prepack": "npm run build",
+    "prepare": "npm run build",
     "prepublishOnly": "npm run release:check"
   },
   "engines": {

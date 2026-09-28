@@ -1,6 +1,26 @@
 # Installing Loddi
 
-Loddi uses the same npm package on Windows, macOS, and Linux. Node.js 22.20 or newer is required.
+Loddi uses the same npm package on Windows, macOS, and Linux. Node.js 22.20 or newer is required. Until Loddi is published on npm, installation from GitHub also requires Git. Pandoc and Typst remain optional.
+
+## Quick install from GitHub
+
+On Linux or macOS, inspect [the installer](../scripts/install.sh) before running a remote script, then run:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/FranciscoAscue/loddi-tui/master/scripts/install.sh | bash
+loddi --version
+```
+
+The script checks Node.js, npm and Git, installs Loddi globally through npm, and does not use `sudo`. It does not install Node.js or modify your shell configuration. If your npm global prefix is not writable, configure a user-owned Node/npm installation (for example with a Node version manager) and rerun it. A successful install needs npm's global bin directory on `PATH`.
+
+On Windows, run this in PowerShell or Windows Terminal after installing Node.js and Git:
+
+```powershell
+npm install --global "github:FranciscoAscue/loddi-tui#master"
+loddi --version
+```
+
+These GitHub commands track `master`, so updates may change the installed code. npm runs this repository's `prepare` build when installing from Git. For a reproducible install, replace `#master` in the npm command with a reviewed commit hash. The installer URL itself should likewise be reviewed before piping it to Bash.
 
 ## From npm (recommended once published)
 
@@ -11,15 +31,13 @@ loddi --help
 
 After installation, `loddi ./notes.md` opens one Markdown file directly. Use `loddi init ./my-book` for a new empty project, or `loddi init ./existing-folder --adopt` to index Markdown files already in a folder without moving them. Then open the folder with `loddi ./existing-folder`.
 
-> **Note:** The package has not been published to npm yet. Use the source-checkout method below until the first public release.
+> **Note:** The package has not been published to npm yet. Use the GitHub installer above or the source-checkout method below until the first public release.
 
 The project uses the MIT license. Run `npm run release:check` before any eventual publication; this validates repository links and the license file. Publication is not planned yet.
 
 ### Update
 
-```bash
-npm update --global loddi-tui
-```
+For the current GitHub installation, rerun the installer (Linux/macOS) or the Windows `npm install --global "github:FranciscoAscue/loddi-tui#master"` command. After a registry release, use `npm update --global loddi-tui`.
 
 ### Uninstall
 
@@ -31,18 +49,18 @@ npm uninstall --global loddi-tui
 
 ## From a source checkout
 
-This method works today on all supported systems:
+This method works on all supported systems and is useful for development:
 
 ```bash
 git clone https://github.com/FranciscoAscue/loddi-tui.git
 cd loddi-tui
-npm install
+npm ci
 npm run check        # typecheck + tests + build
 npm install --global .
 loddi --help
 ```
 
-To uninstall a globally linked checkout:
+To uninstall any global Loddi installation:
 
 ```bash
 npm uninstall --global loddi-tui
@@ -100,7 +118,7 @@ loddi tools install typst
 
 ## Windows
 
-Run the commands above in PowerShell or Windows Terminal. npm creates the `loddi.cmd` launcher automatically.
+Run the npm or checkout commands above in PowerShell or Windows Terminal. npm creates the `loddi.cmd` launcher automatically. Installing from GitHub requires Git for Windows. If PowerShell cannot find `loddi` after installation, restart the terminal and check that npm's global prefix is on `PATH`.
 
 Recommended: **Windows Terminal** with a font that includes Unicode block characters (Cascadia Code, JetBrains Mono, Fira Code, etc.) for the best TUI experience.
 
